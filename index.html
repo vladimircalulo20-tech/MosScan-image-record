@@ -1,198 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>MosquiScan</title>
+    <title>MosquiScan</title>
 
-  <!-- Leaflet CSS -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  >
+    <!-- Leaflet CSS -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
 
-  <!-- Your CSS -->
-  <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- ================= HEADER ================= -->
-
-  <header>
-    <h1>MosquiScan</h1>
-
-    <p>
-      Drone-Assisted AI Inspection and Geospatial Mapping System
-    </p>
-  </header>
-
-
-  <main class="container">
-
-
-    <!-- ================= IMAGE UPLOAD ================= -->
-
-    <section class="card">
-
-      <h2>1. Upload Inspection Image</h2>
-
-      <p class="instruction">
-        Upload an image captured by the drone.
-      </p>
-
-      <input
-        type="file"
-        id="imageInput"
-        accept="image/*"
-      >
-
-      <img
-        id="imagePreview"
-        alt="Drone Image Preview"
-      >
-
-      <button id="analyzeButton">
-        Analyze Image
-      </button>
-
-      <div
-        id="aiResult"
-        class="result-box"
-      >
-        AI Result: Waiting for image...
-      </div>
-
-    </section>
-
-
-    <!-- ================= MAP ================= -->
-
-    <section class="card">
-
-      <h2>2. Select Inspection Location</h2>
-
-      <p class="instruction">
-        Click on the map to pinpoint the location where the drone image
-        was captured.
-      </p>
-
-      <div id="map"></div>
-
-
-      <!-- Coordinates -->
-
-      <div class="coordinates">
-
-        <div>
-
-          <label for="latitude">
-            Latitude
-          </label>
-
-          <input
-            type="text"
-            id="latitude"
-            placeholder="Latitude"
-            readonly
-          >
-
+    <!-- HEADER -->
+    <header>
+        <div class="header-content">
+            <h1>🦟 MosquiScan</h1>
+            <p>
+                Drone-Assisted AI Inspection and Geospatial Mapping System
+            </p>
         </div>
+    </header>
 
 
-        <div>
+    <main>
 
-          <label for="longitude">
-            Longitude
-          </label>
+        <!-- DASHBOARD -->
+        <section class="dashboard">
 
-          <input
-            type="text"
-            id="longitude"
-            placeholder="Longitude"
-            readonly
-          >
+            <div class="stat-card total-card">
+                <h3>Total Records</h3>
+                <div class="stat-number" id="totalRecords">0</div>
+            </div>
 
-        </div>
+            <div class="stat-card possible-card">
+                <h3>Possible Sites</h3>
+                <div class="stat-number" id="possibleSites">0</div>
+            </div>
 
-      </div>
+            <div class="stat-card not-possible-card">
+                <h3>Not Possible Sites</h3>
+                <div class="stat-number" id="notPossibleSites">0</div>
+            </div>
 
-
-      <button id="locationButton">
-        📍 Use My Current Location
-      </button>
-
-    </section>
+        </section>
 
 
-    <!-- ================= INSPECTION DETAILS ================= -->
+        <!-- IMAGE ANALYSIS -->
+        <section class="card">
 
-    <section class="card">
+            <h2>Drone Image Analysis</h2>
 
-      <h2>3. Inspection Details</h2>
+            <label for="imageInput">
+                Upload Drone Image
+            </label>
 
+            <input
+                type="file"
+                id="imageInput"
+                accept="image/*"
+            >
 
-      <label for="inspectionDate">
-        Date
-      </label>
+            <div class="preview-container">
+                <img
+                    id="imagePreview"
+                    src=""
+                    alt="Drone image preview"
+                    style="display:none;"
+                >
+            </div>
 
-      <input
-        type="date"
-        id="inspectionDate"
-      >
+            <button id="analyzeButton">
+                🔍 Analyze Image
+            </button>
 
+            <div id="aiResult" class="result-box">
+                AI Result: Waiting for image...
+            </div>
 
-      <label for="notes">
-        Notes
-      </label>
-
-      <textarea
-        id="notes"
-        placeholder="Enter observations or additional details..."
-      ></textarea>
-
-
-      <button id="saveButton">
-        💾 Save Inspection
-      </button>
-
-
-      <p id="saveMessage"></p>
-
-    </section>
+        </section>
 
 
-    <!-- ================= INSPECTION RECORDS ================= -->
+        <!-- LOCATION -->
+        <section class="card">
 
-    <section class="card">
+            <h2>Inspection Location</h2>
 
-      <h2>4. Inspection Records</h2>
+            <p>
+                Click anywhere on the map to select the inspection location.
+            </p>
 
-      <div id="recordsList">
+            <div id="map"></div>
 
-        <p>
-          No inspection records yet.
-        </p>
+            <button id="locationButton">
+                📍 Use My Current Location
+            </button>
 
-      </div>
+            <div class="coordinates">
 
-    </section>
+                <div>
+                    <label for="latitude">
+                        Latitude
+                    </label>
+
+                    <input
+                        type="text"
+                        id="latitude"
+                        placeholder="Latitude"
+                    >
+                </div>
+
+                <div>
+                    <label for="longitude">
+                        Longitude
+                    </label>
+
+                    <input
+                        type="text"
+                        id="longitude"
+                        placeholder="Longitude"
+                    >
+                </div>
+
+            </div>
+
+        </section>
 
 
-  </main>
+        <!-- INSPECTION DETAILS -->
+        <section class="card">
+
+            <h2>Inspection Details</h2>
+
+            <label for="inspectionDate">
+                Date
+            </label>
+
+            <input
+                type="date"
+                id="inspectionDate"
+            >
 
 
-  <!-- ================= LEAFLET ================= -->
+            <label for="notes">
+                Notes
+            </label>
 
-  <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
-  </script>
+            <textarea
+                id="notes"
+                rows="4"
+                placeholder="Enter inspection notes..."
+            ></textarea>
 
 
-  <!-- ================= YOUR JAVASCRIPT ================= -->
+            <button
+                id="saveButton"
+                class="save-button"
+            >
+                💾 Save Inspection
+            </button>
 
-  <script src="script.js"></script>
+            <p
+                id="saveMessage"
+                class="save-message"
+            ></p>
+
+        </section>
+
+
+        <!-- INSPECTION RECORDS -->
+        <section class="card">
+
+            <h2>Inspection Records</h2>
+
+            <div id="recordsList">
+                <p class="empty-message">
+                    No inspection records yet.
+                </p>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Leaflet JS -->
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+    </script>
+
+    <script src="script.js"></script>
 
 </body>
 </html>
