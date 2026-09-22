@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,53 +13,95 @@
         href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     >
 
+    <!-- MosquiScan CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- HEADER -->
+    <!-- =========================
+         HEADER
+    ========================== -->
+
     <header>
+
         <div class="header-content">
+
             <h1>🦟 MosquiScan</h1>
+
             <p>
                 Drone-Assisted AI Inspection and Geospatial Mapping System
             </p>
+
         </div>
+
     </header>
 
 
     <main>
 
-        <!-- DASHBOARD -->
+
+        <!-- =========================
+             DASHBOARD
+        ========================== -->
+
         <section class="dashboard">
 
             <div class="stat-card total-card">
+
                 <h3>Total Records</h3>
-                <div class="stat-number" id="totalRecords">0</div>
+
+                <div
+                    class="stat-number"
+                    id="totalRecords">
+                    0
+                </div>
+
             </div>
+
 
             <div class="stat-card possible-card">
+
                 <h3>Possible Sites</h3>
-                <div class="stat-number" id="possibleSites">0</div>
+
+                <div
+                    class="stat-number"
+                    id="possibleSites">
+                    0
+                </div>
+
             </div>
 
+
             <div class="stat-card not-possible-card">
+
                 <h3>Not Possible Sites</h3>
-                <div class="stat-number" id="notPossibleSites">0</div>
+
+                <div
+                    class="stat-number"
+                    id="notPossibleSites">
+                    0
+                </div>
+
             </div>
 
         </section>
 
 
-        <!-- IMAGE ANALYSIS -->
+
+        <!-- =========================
+             IMAGE ANALYSIS
+        ========================== -->
+
         <section class="card">
 
             <h2>Drone Image Analysis</h2>
 
+
             <label for="imageInput">
                 Upload Drone Image
             </label>
+
 
             <input
                 type="file"
@@ -66,80 +109,117 @@
                 accept="image/*"
             >
 
+
             <div class="preview-container">
+
                 <img
                     id="imagePreview"
                     src=""
                     alt="Drone image preview"
                     style="display:none;"
                 >
+
             </div>
 
+
             <button id="analyzeButton">
+
                 🔍 Analyze Image
+
             </button>
 
-            <div id="aiResult" class="result-box">
+
+            <div
+                id="aiResult"
+                class="result-box">
+
                 AI Result: Waiting for image...
+
             </div>
 
         </section>
 
 
-        <!-- LOCATION -->
+
+        <!-- =========================
+             LOCATION
+        ========================== -->
+
         <section class="card">
 
             <h2>Inspection Location</h2>
+
 
             <p>
                 Click anywhere on the map to select the inspection location.
             </p>
 
+
             <div id="map"></div>
 
+
             <button id="locationButton">
+
                 📍 Use My Current Location
+
             </button>
+
 
             <div class="coordinates">
 
+
                 <div>
+
                     <label for="latitude">
                         Latitude
                     </label>
+
 
                     <input
                         type="text"
                         id="latitude"
                         placeholder="Latitude"
                     >
+
                 </div>
 
+
+
                 <div>
+
                     <label for="longitude">
                         Longitude
                     </label>
+
 
                     <input
                         type="text"
                         id="longitude"
                         placeholder="Longitude"
                     >
+
                 </div>
+
 
             </div>
 
         </section>
 
 
-        <!-- INSPECTION DETAILS -->
+
+        <!-- =========================
+             INSPECTION DETAILS
+        ========================== -->
+
         <section class="card">
 
             <h2>Inspection Details</h2>
 
+
             <label for="inspectionDate">
                 Date
             </label>
+
 
             <input
                 type="date"
@@ -151,6 +231,7 @@
                 Notes
             </label>
 
+
             <textarea
                 id="notes"
                 rows="4"
@@ -160,52 +241,73 @@
 
             <button
                 id="saveButton"
-                class="save-button"
-            >
+                class="save-button">
+
                 💾 Save Inspection
+
             </button>
+
 
             <p
                 id="saveMessage"
-                class="save-message"
-            ></p>
+                class="save-message">
+            </p>
 
         </section>
 
 
-        <!-- INSPECTION RECORDS -->
+
+        <!-- =========================
+             INSPECTION RECORDS
+        ========================== -->
+
         <section class="card">
 
             <h2>Inspection Records</h2>
 
+
             <div id="recordsList">
+
                 <p class="empty-message">
+
                     No inspection records yet.
+
                 </p>
+
             </div>
 
         </section>
 
+
     </main>
 
 
-    <!-- Leaflet JS -->
+
+    <!-- =========================
+         JAVASCRIPT LIBRARIES
+    ========================== -->
+
+    <!-- Leaflet -->
     <script
         src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
     </script>
+
 
     <!-- TensorFlow.js -->
     <script
         src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js">
     </script>
 
-    <!-- Teachable Machine Image Library -->
+
+    <!-- Teachable Machine -->
     <script
         src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js">
     </script>
+
 
     <!-- MosquiScan JavaScript -->
     <script src="script.js"></script>
 
 </body>
+
 </html>
