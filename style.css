@@ -1,77 +1,342 @@
+/* =========================================================
+   MOSQUISCAN
+   CLEAN GREEN ENVIRONMENTAL MONITORING DESIGN
+========================================================= */
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+html {
+    scroll-behavior: smooth;
+}
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-
-    background: #f1f8f4;
-
     color: #263238;
+    line-height: 1.5;
+
+    /* Layered background */
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(22, 163, 74, 0.12),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 90% 35%,
+            rgba(8, 127, 91, 0.10),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 30% 90%,
+            rgba(134, 239, 172, 0.12),
+            transparent 25%
+        ),
+        #f1f8f4;
 }
 
 
-/* =========================
+/* =========================================================
    HEADER
-========================= */
+========================================================= */
 
-header {
+.main-header {
+    position: relative;
+    overflow: hidden;
 
-    background: linear-gradient(
-        135deg,
-        #087f5b,
-        #16a34a
-    );
+    min-height: 245px;
+
+    display: flex;
+    align-items: center;
+
+    background:
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(134, 239, 172, 0.20),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 15% 90%,
+            rgba(34, 197, 94, 0.18),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #043d2c,
+            #087f5b 55%,
+            #16a34a
+        );
 
     color: white;
 
-    padding: 30px 20px;
-
-    text-align: center;
+    box-shadow:
+        0 10px 30px
+        rgba(0, 80, 50, 0.18);
 }
 
 
-.header-content h1 {
+/* =========================================================
+   HEADER PATTERN
+========================================================= */
 
-    font-size: 36px;
+.header-pattern {
+    position: absolute;
 
-    margin-bottom: 8px;
+    pointer-events: none;
+
+    opacity: 0.18;
 }
 
 
-.header-content p {
+/* Circular pattern */
+
+.pattern-one {
+    width: 420px;
+    height: 420px;
+
+    right: -130px;
+    top: -250px;
+
+    border-radius: 50%;
+
+    border:
+        2px solid
+        rgba(255, 255, 255, 0.35);
+
+    box-shadow:
+        0 0 0 30px rgba(255, 255, 255, 0.04),
+        0 0 0 60px rgba(255, 255, 255, 0.04),
+        0 0 0 90px rgba(255, 255, 255, 0.04);
+}
+
+
+/* Second pattern */
+
+.pattern-two {
+    width: 230px;
+    height: 230px;
+
+    left: -100px;
+    bottom: -150px;
+
+    border-radius: 50%;
+
+    border:
+        2px solid
+        rgba(255, 255, 255, 0.25);
+
+    box-shadow:
+        0 0 0 25px rgba(255, 255, 255, 0.04),
+        0 0 0 50px rgba(255, 255, 255, 0.04);
+}
+
+
+/* Small grid-like decorative pattern */
+
+.main-header::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,0.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,0.035) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        35px 35px;
+
+    mask-image:
+        linear-gradient(
+            to right,
+            transparent,
+            black 20%,
+            black 80%,
+            transparent
+        );
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   HEADER CONTENT
+========================================================= */
+
+.header-content {
+    position: relative;
+
+    z-index: 5;
+
+    width: 92%;
+    max-width: 1200px;
+
+    margin: auto;
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.system-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.system-title h1 {
+    font-size: 46px;
+
+    font-weight: 800;
+
+    letter-spacing: -1.5px;
+
+    margin: 0;
+}
+
+
+.mosquito-icon {
+    font-size: 38px;
+
+    filter:
+        drop-shadow(
+            0 3px 5px
+            rgba(0,0,0,0.20)
+        );
+}
+
+
+/* =========================================================
+   SUBTITLE
+========================================================= */
+
+.system-subtitle {
+    margin-top: 7px;
+
+    max-width: 700px;
 
     font-size: 15px;
 
-    opacity: 0.95;
+    color:
+        rgba(255,255,255,0.88);
 }
 
 
+/* =========================================================
+   SCHOOL NAME
+========================================================= */
 
-/* =========================
-   MAIN
-========================= */
+.school-name {
+    margin-top: 13px;
 
-main {
+    font-size: 11px;
 
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    color: #d9f99d;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.system-status {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    width: fit-content;
+
+    margin-top: 12px;
+
+    padding:
+        5px 11px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,0.09);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.14);
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+}
+
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: #86efac;
+
+    box-shadow:
+        0 0 10px #86efac;
+
+    animation:
+        statusPulse 2s infinite;
+}
+
+
+@keyframes statusPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.45;
+        transform: scale(0.8);
+    }
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
+
+.container {
     width: 92%;
-
     max-width: 1200px;
 
-    margin: 30px auto;
+    margin: 35px auto;
 }
 
 
-
-/* =========================
+/* =========================================================
    DASHBOARD
-========================= */
+========================================================= */
 
 .dashboard {
-
     display: grid;
 
     grid-template-columns:
@@ -83,131 +348,216 @@ main {
 }
 
 
-.stat-card {
+.dashboard-card {
+    position: relative;
 
-    background: white;
+    display: flex;
 
-    border-radius: 16px;
+    align-items: center;
 
-    padding: 28px 20px;
+    gap: 18px;
 
-    text-align: center;
+    background:
+        rgba(255,255,255,0.95);
+
+    border-radius: 18px;
+
+    padding: 25px;
+
+    overflow: hidden;
 
     box-shadow:
-        0 5px 15px
-        rgba(0, 0, 0, 0.08);
+        0 8px 25px
+        rgba(0,0,0,0.06);
 
-    border-top: 6px solid;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
 
-.stat-card h3 {
+.dashboard-card:hover {
+    transform: translateY(-5px);
 
-    color: #31516f;
-
-    font-size: 18px;
-
-    margin-bottom: 12px;
+    box-shadow:
+        0 14px 30px
+        rgba(0,0,0,0.10);
 }
 
 
-.stat-number {
+.dashboard-card h3 {
+    font-size: 14px;
 
-    font-size: 44px;
+    color: #546e7a;
 
-    font-weight: bold;
+    margin-bottom: 3px;
 }
 
 
+.dashboard-card p {
+    font-size: 38px;
 
-/* TOTAL RECORDS */
+    line-height: 1;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   DASHBOARD ICON
+========================================================= */
+
+.card-icon {
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 15px;
+
+    font-size: 26px;
+
+    flex-shrink: 0;
+}
+
+
+/* TOTAL */
 
 .total-card {
+    border-left:
+        5px solid #f2c94c;
+}
 
-    border-top-color: #f2c94c;
+.total-card .card-icon {
+    background: #fff8d9;
+}
+
+.total-card p {
+    color: #d5a900;
 }
 
 
-.total-card .stat-number {
-
-    color: #f2c94c;
-}
-
-
-
-/* POSSIBLE SITES */
+/* POSSIBLE */
 
 .possible-card {
-
-    border-top-color: #e53935;
+    border-left:
+        5px solid #e53935;
 }
 
+.possible-card .card-icon {
+    background: #fff0f0;
+}
 
-.possible-card .stat-number {
-
+.possible-card p {
     color: #e53935;
 }
 
 
-
-/* NOT POSSIBLE SITES */
+/* NOT POSSIBLE */
 
 .not-possible-card {
-
-    border-top-color: #16a34a;
+    border-left:
+        5px solid #16a34a;
 }
 
+.not-possible-card .card-icon {
+    background: #eafaf0;
+}
 
-.not-possible-card .stat-number {
-
+.not-possible-card p {
     color: #16a34a;
 }
 
 
-
-/* =========================
-   CARD
-========================= */
+/* =========================================================
+   GENERAL CARDS
+========================================================= */
 
 .card {
+    background:
+        rgba(255,255,255,0.96);
 
-    background: white;
+    border-radius: 18px;
 
-    border-radius: 16px;
-
-    padding: 25px;
+    padding: 28px;
 
     margin-bottom: 25px;
 
     box-shadow:
-        0 5px 15px
-        rgba(0, 0, 0, 0.07);
+        0 8px 25px
+        rgba(0,0,0,0.05);
+
+    border:
+        1px solid
+        rgba(8,127,91,0.07);
 }
 
 
 .card h2 {
-
     color: #087f5b;
+
+    font-size: 21px;
 
     margin-bottom: 20px;
 }
 
 
-.card > p {
+/* =========================================================
+   UPLOAD
+========================================================= */
 
-    color: #546e7a;
+.upload-area {
+    padding: 25px;
+
+    border:
+        2px dashed #b7dcca;
+
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8fffa,
+            #eef9f2
+        );
+
+    text-align: center;
+
+    transition: 0.25s ease;
+}
+
+
+.upload-area:hover {
+    border-color: #16a34a;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #f0fff5
+        );
+}
+
+
+.upload-area label {
+    display: block;
+
+    font-weight: bold;
+
+    color: #087f5b;
 
     margin-bottom: 10px;
 }
 
 
-
-/* =========================
+/* =========================================================
    LABELS
-========================= */
+========================================================= */
 
 label {
-
     display: block;
 
     font-weight: bold;
@@ -218,22 +568,20 @@ label {
 }
 
 
-
-/* =========================
+/* =========================================================
    INPUTS
-========================= */
+========================================================= */
 
 input,
 textarea {
-
     width: 100%;
 
-    padding: 12px;
+    padding: 13px 14px;
 
     border:
         1px solid #cfd8dc;
 
-    border-radius: 8px;
+    border-radius: 10px;
 
     font-size: 15px;
 
@@ -242,33 +590,41 @@ textarea {
     outline: none;
 
     background: white;
+
+    transition: 0.2s ease;
 }
 
 
 input:focus,
 textarea:focus {
-
     border-color: #16a34a;
 
     box-shadow:
-        0 0 0 2px
-        rgba(22, 163, 74, 0.08);
+        0 0 0 3px
+        rgba(22,163,74,0.10);
 }
 
 
 textarea {
-
     resize: vertical;
 }
 
 
+input[type="file"] {
+    cursor: pointer;
 
-/* =========================
+    background: #fbfffc;
+
+    border:
+        1px solid #cfe5d8;
+}
+
+
+/* =========================================================
    IMAGE PREVIEW
-========================= */
+========================================================= */
 
 .preview-container {
-
     margin-top: 20px;
 
     text-align: center;
@@ -278,33 +634,30 @@ textarea {
 
 
 #imagePreview {
-
     max-width: 100%;
 
     max-height: 350px;
 
-    border-radius: 12px;
+    border-radius: 14px;
 
     object-fit: contain;
 
     box-shadow:
-        0 4px 12px
-        rgba(0, 0, 0, 0.1);
+        0 8px 25px
+        rgba(0,0,0,0.12);
 }
 
 
-
-/* =========================
+/* =========================================================
    BUTTONS
-========================= */
+========================================================= */
 
 button {
-
     border: none;
 
-    border-radius: 8px;
+    border-radius: 10px;
 
-    padding: 12px 20px;
+    padding: 13px 20px;
 
     margin-top: 15px;
 
@@ -318,30 +671,41 @@ button {
 
     cursor: pointer;
 
-    transition: 0.2s;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
 }
 
 
 button:hover {
-
     background: #066b4d;
 
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 7px 18px
+        rgba(8,127,91,0.20);
+}
+
+
+button:active {
+    transform: translateY(0);
 }
 
 
 button:disabled {
-
     background: #9e9e9e;
 
     cursor: not-allowed;
 
     transform: none;
+
+    box-shadow: none;
 }
 
 
 .save-button {
-
     width: 100%;
 
     background: #16a34a;
@@ -349,23 +713,20 @@ button:disabled {
 
 
 .save-button:hover {
-
     background: #12813a;
 }
 
 
-
-/* =========================
+/* =========================================================
    AI RESULT
-========================= */
+========================================================= */
 
 .result-box {
-
     margin-top: 20px;
 
     padding: 18px;
 
-    border-radius: 10px;
+    border-radius: 12px;
 
     background: #f1f8f4;
 
@@ -375,21 +736,12 @@ button:disabled {
     font-weight: bold;
 
     line-height: 1.5;
-}
 
-
-.result-loading {
-
-    border-left-color: #f2c94c;
-
-    background: #fffbea;
-
-    color: #795548;
+    text-align: left;
 }
 
 
 .result-possible {
-
     border-left-color: #e53935;
 
     background: #fff5f5;
@@ -399,7 +751,6 @@ button:disabled {
 
 
 .result-not-possible {
-
     border-left-color: #16a34a;
 
     background: #f1fff5;
@@ -408,32 +759,35 @@ button:disabled {
 }
 
 
-
-/* =========================
+/* =========================================================
    MAP
-========================= */
+========================================================= */
 
 #map {
-
     width: 100%;
 
     height: 450px;
 
-    border-radius: 12px;
+    border-radius: 15px;
 
     margin: 20px 0;
 
     overflow: hidden;
+
+    box-shadow:
+        0 5px 18px
+        rgba(0,0,0,0.08);
+
+    border:
+        1px solid #dce5e1;
 }
 
 
-
-/* =========================
+/* =========================================================
    COORDINATES
-========================= */
+========================================================= */
 
 .coordinates {
-
     display: grid;
 
     grid-template-columns:
@@ -443,13 +797,29 @@ button:disabled {
 }
 
 
+.map-help {
+    font-size: 13px;
 
-/* =========================
+    color: #78909c;
+
+    margin-top: 8px;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+
+/* =========================================================
    SAVE MESSAGE
-========================= */
+========================================================= */
 
 .save-message {
-
     margin-top: 12px;
 
     font-weight: bold;
@@ -460,97 +830,167 @@ button:disabled {
 }
 
 
+/* =========================================================
+   RECORD HEADER
+========================================================= */
 
-/* =========================
+.section-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+}
+
+
+.section-header h2 {
+    margin-bottom: 0;
+}
+
+
+.clear-button {
+    background: #607d8b;
+
+    font-size: 13px;
+
+    padding: 9px 14px;
+
+    margin-top: 0;
+}
+
+
+.clear-button:hover {
+    background: #455a64;
+}
+
+
+/* =========================================================
    RECORDS
-========================= */
+========================================================= */
 
-.record {
+.record-item {
+    display: flex;
+
+    gap: 18px;
+
+    align-items: flex-start;
 
     border:
         1px solid #dce5e1;
 
-    border-radius: 12px;
+    border-radius: 15px;
 
-    padding: 18px;
+    padding: 16px;
 
-    margin-bottom: 18px;
+    margin-bottom: 15px;
 
-    background: #fbfffc;
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #f9fdfb
+        );
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 
-.record img {
+.record-item:hover {
+    transform: translateY(-2px);
 
-    width: 100%;
+    box-shadow:
+        0 7px 20px
+        rgba(0,0,0,0.07);
+}
 
-    max-width: 350px;
 
-    max-height: 250px;
+.record-image {
+    width: 140px;
+
+    height: 100px;
+
+    flex-shrink: 0;
+
+    overflow: hidden;
+
+    border-radius: 11px;
+
+    background: #e8f5ee;
+
+    box-shadow:
+        0 3px 10px
+        rgba(0,0,0,0.08);
+}
+
+
+.record-image img {
+    width: 140px;
+
+    height: 100px;
 
     object-fit: cover;
 
-    border-radius: 10px;
-
-    margin-bottom: 15px;
+    display: block;
 }
 
 
-.record h3 {
+.record-info {
+    flex: 1;
 
-    margin-bottom: 10px;
-
-    color: #087f5b;
+    min-width: 0;
 }
 
 
-.record p {
+.record-info h3 {
+    margin-bottom: 7px;
 
-    margin: 6px 0;
-
-    line-height: 1.5;
+    font-size: 17px;
 }
 
 
-.possible-text {
+.record-info p {
+    margin: 5px 0;
 
-    color: #e53935;
+    line-height: 1.45;
 
-    font-weight: bold;
+    color: #546e7a;
+
+    font-size: 14px;
+
+    overflow-wrap: anywhere;
 }
 
 
-.not-possible-text {
+/* =========================================================
+   EMPTY RECORDS
+========================================================= */
 
-    color: #16a34a;
-
-    font-weight: bold;
-}
-
-
+.no-records,
 .empty-message {
-
     color: #78909c;
 
     text-align: center;
 
-    padding: 20px;
+    padding: 25px;
 }
 
 
-
-/* =========================
+/* =========================================================
    MAP POPUP
-========================= */
+========================================================= */
 
 .map-popup {
-
     width: 240px;
 }
 
 
 .map-popup h3 {
-
     margin-bottom: 10px;
 
     color: #087f5b;
@@ -558,7 +998,6 @@ button:disabled {
 
 
 .map-popup img {
-
     width: 100%;
 
     max-height: 160px;
@@ -572,125 +1011,152 @@ button:disabled {
 
 
 .map-popup p {
-
     margin: 5px 0;
 }
 
 
+/* =========================================================
+   FOOTER
+========================================================= */
 
-/* =========================
-   FILE INPUT
-========================= */
+footer {
+    margin-top: 45px;
 
-input[type="file"] {
+    padding: 25px 20px;
 
-    cursor: pointer;
+    text-align: center;
 
-    background: #fbfffc;
+    background:
+        linear-gradient(
+            135deg,
+            #043d2c,
+            #087f5b
+        );
+
+    color:
+        rgba(255,255,255,0.78);
+
+    font-size: 13px;
 }
 
 
+.footer-school {
+    margin-top: 5px;
 
-/* =========================
-   LEAFLET POPUP
-========================= */
-
-.leaflet-popup-content {
-
-    margin: 12px;
-
+    color: #d9f99d;
 }
 
 
-
-/* =========================
+/* =========================================================
    MOBILE
-========================= */
+========================================================= */
 
 @media (max-width: 800px) {
 
     .dashboard {
-
         grid-template-columns: 1fr;
     }
 
 
     .coordinates {
-
         grid-template-columns: 1fr;
     }
 
 
-    .header-content h1 {
-
-        font-size: 28px;
+    .system-title h1 {
+        font-size: 34px;
     }
 
 
-    .header-content p {
-
-        font-size: 14px;
+    .mosquito-icon {
+        font-size: 29px;
     }
 
 
     #map {
-
         height: 350px;
     }
 
 
     .card {
-
         padding: 20px;
     }
 
 }
-/* =========================================================
-   SMALLER INSPECTION RECORD IMAGES
-========================================================= */
 
-.record-image {
-    width: 140px;
-    height: 100px;
-    flex-shrink: 0;
-    overflow: hidden;
-    border-radius: 10px;
-    background: #e8f5ee;
-}
-
-.record-image img {
-    width: 140px;
-    height: 100px;
-    object-fit: cover;
-    display: block;
-}
-
-
-/* Keep record layout neat */
-
-.record-item {
-    display: flex;
-    gap: 15px;
-    align-items: flex-start;
-}
-
-
-/* Mobile */
 
 @media (max-width: 600px) {
+
+    .main-header {
+        min-height: 220px;
+
+        padding: 30px 15px;
+    }
+
+
+    .system-title h1 {
+        font-size: 29px;
+    }
+
+
+    .mosquito-icon {
+        font-size: 25px;
+    }
+
+
+    .system-subtitle {
+        font-size: 12px;
+    }
+
+
+    .school-name {
+        font-size: 8px;
+
+        letter-spacing: 1px;
+    }
+
+
+    .system-status {
+        font-size: 8px;
+    }
+
+
+    .dashboard-card {
+        padding: 20px;
+    }
+
+
+    .dashboard-card p {
+        font-size: 32px;
+    }
+
+
+    .record-item {
+        gap: 10px;
+    }
+
 
     .record-image {
         width: 110px;
         height: 80px;
     }
 
+
     .record-image img {
         width: 110px;
         height: 80px;
     }
 
-    .record-item {
-        gap: 10px;
+
+    .record-info p {
+        font-size: 12px;
+    }
+
+
+    .section-header {
+        align-items: flex-start;
+
+        flex-direction: column;
     }
 
 }
