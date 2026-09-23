@@ -1,11 +1,5 @@
 // ============================================================
 // 🦟 MOSQUISCAN - MAIN JAVASCRIPT
-// Drone-Assisted AI Inspection and Geospatial Mapping System
-// ============================================================
-
-
-// ============================================================
-// 1. TEACHABLE MACHINE MODEL
 // ============================================================
 
 const MODEL_URL =
@@ -14,9 +8,15 @@ const MODEL_URL =
 let model = null;
 let maxPredictions = 0;
 
+let currentImage = null;
+let currentAIResult = "";
+
+let map = null;
+let selectedLocationMarker = null;
+
 
 // ============================================================
-// 2. DOM ELEMENTS
+// DOM ELEMENTS
 // ============================================================
 
 const imageInput = document.getElementById("imageInput");
@@ -36,40 +36,30 @@ const saveMessage = document.getElementById("saveMessage");
 
 const recordsList = document.getElementById("recordsList");
 
-
-// Dashboard
 const totalRecords = document.getElementById("totalRecords");
 const possibleSites = document.getElementById("possibleSites");
 const notPossibleSites = document.getElementById("notPossibleSites");
 
 
 // ============================================================
-// 3. VARIABLES
-// ============================================================
-
-let currentImage = null;
-let currentAIResult = "";
-let map = null;
-let selectedLocationMarker = null;
-
-
-// ============================================================
-// 4. DEFAULT DATE
+// DEFAULT DATE
 // ============================================================
 
 if (inspectionDate) {
+
     const today = new Date();
 
     const year = today.getFullYear();
     const month = String(today.getMonth() + 1).padStart(2, "0");
     const day = String(today.getDate()).padStart(2, "0");
 
-    inspectionDate.value = `${year}-${month}-${day}`;
+    inspectionDate.value =
+        `${year}-${month}-${day}`;
 }
 
 
 // ============================================================
-// 5. INITIALIZE MAP
+// MAP
 // ============================================================
 
 if (document.getElementById("map")) {
@@ -84,41 +74,46 @@ if (document.getElementById("map")) {
         {
             maxZoom: 19,
             attribution:
-                '&copy; OpenStreetMap contributors'
+                "&copy; OpenStreetMap contributors"
         }
     ).addTo(map);
 
 
-    // Click map to select coordinates
     map.on("click", function (event) {
 
         const lat = event.latlng.lat;
         const lng = event.latlng.lng;
 
         if (latitudeInput) {
-            latitudeInput.value = lat.toFixed(6);
+            latitudeInput.value =
+                lat.toFixed(6);
         }
 
         if (longitudeInput) {
-            longitudeInput.value = lng.toFixed(6);
+            longitudeInput.value =
+                lng.toFixed(6);
         }
 
 
         if (selectedLocationMarker) {
-            map.removeLayer(selectedLocationMarker);
+            map.removeLayer(
+                selectedLocationMarker
+            );
         }
 
 
-        selectedLocationMarker = L.marker([
-            lat,
-            lng
-        ]).addTo(map);
+        selectedLocationMarker =
+            L.marker([lat, lng])
+                .addTo(map);
 
-        selectedLocationMarker.bindPopup(
-            `<b>Selected Location</b><br>
-            Latitude: ${lat.toFixed(6)}<br>
-            Longitude: ${lng.toFixed(6)}`
-        ).openPopup();
+
+        selectedLocationMarker
+            .bindPopup(
+                `<b>Selected Location</b><br>
+                Latitude: ${lat.toFixed(6)}<br>
+                Longitude: ${lng.toFixed(6)}`
+            )
+            .openPopup();
 
     });
 
@@ -126,7 +121,7 @@ if (document.getElementById("map")) {
 
 
 // ============================================================
-// 6. LOAD TEACHABLE MACHINE MODEL
+// LOAD AI MODEL
 // ============================================================
 
 async function loadAIModel() {
@@ -155,9 +150,9 @@ async function loadAIModel() {
             MODEL_URL + "metadata.json";
 
 
-        console.log("Loading AI model...");
-        console.log("Model URL:", modelURL);
-        console.log("Metadata URL:", metadataURL);
+        console.log(
+            "Loading MosquiScan AI..."
+        );
 
 
         model = await tmImage.load(
@@ -174,21 +169,18 @@ async function loadAIModel() {
             "MosquiScan AI Model Loaded!"
         );
 
+
         console.log(
             "Number of classes:",
             maxPredictions
         );
 
 
-        // Show the exact class names
         if (model.getClassLabels) {
 
-            const labels =
-                model.getClassLabels();
-
             console.log(
-                "Model Classes:",
-                labels
+                "Model classes:",
+                model.getClassLabels()
             );
 
         }
@@ -200,22 +192,29 @@ async function loadAIModel() {
 
 
         if (aiResult) {
+
             aiResult.textContent =
                 "AI model ready. Upload an image.";
+
+            aiResult.className =
+                "result-box";
+
         }
 
 
     } catch (error) {
 
         console.error(
-            "Error loading AI model:",
+            "AI model loading error:",
             error
         );
 
 
         if (aiResult) {
+
             aiResult.textContent =
                 "AI model failed to load.";
+
         }
 
 
@@ -229,7 +228,7 @@ async function loadAIModel() {
 
 
 // ============================================================
-// 7. IMAGE UPLOAD
+// IMAGE UPLOAD
 // ============================================================
 
 if (imageInput) {
@@ -253,36 +252,37 @@ if (imageInput) {
                 new FileReader();
 
 
-            reader.onload = function (e) {
+            reader.onload =
+                function (e) {
 
-                if (imagePreview) {
+                    if (imagePreview) {
 
-                    imagePreview.src =
-                        e.target.result;
+                        imagePreview.src =
+                            e.target.result;
 
-                    imagePreview.style.display =
-                        "block";
+                        imagePreview.style.display =
+                            "block";
 
-                }
-
-
-                if (analyzeButton) {
-                    analyzeButton.disabled =
-                        false;
-                }
+                    }
 
 
-                if (aiResult) {
+                    if (analyzeButton) {
+                        analyzeButton.disabled =
+                            false;
+                    }
 
-                    aiResult.textContent =
-                        "Image ready for AI analysis.";
 
-                    aiResult.className =
-                        "result-box";
+                    if (aiResult) {
 
-                }
+                        aiResult.textContent =
+                            "Image ready for AI analysis.";
 
-            };
+                        aiResult.className =
+                            "result-box";
+
+                    }
+
+                };
 
 
             reader.readAsDataURL(file);
@@ -294,7 +294,7 @@ if (imageInput) {
 
 
 // ============================================================
-// 8. AI ANALYSIS
+// AI ANALYSIS
 // ============================================================
 
 if (analyzeButton) {
@@ -303,22 +303,19 @@ if (analyzeButton) {
         "click",
         async function () {
 
-            // Check model
             if (!model) {
 
                 alert(
-                    "The AI model is still loading. Please wait a moment and try again."
+                    "The AI model is still loading. Please wait."
                 );
 
                 return;
             }
 
 
-            // Check image
             if (
                 !imagePreview ||
-                !imagePreview.src ||
-                imagePreview.src === window.location.href
+                !imagePreview.src
             ) {
 
                 alert(
@@ -331,7 +328,8 @@ if (analyzeButton) {
 
             try {
 
-                analyzeButton.disabled = true;
+                analyzeButton.disabled =
+                    true;
 
                 analyzeButton.textContent =
                     "Analyzing...";
@@ -348,10 +346,7 @@ if (analyzeButton) {
                 }
 
 
-                // ------------------------------------------------
-                // RUN TEACHABLE MACHINE
-                // ------------------------------------------------
-
+                // Run Teachable Machine
                 const predictions =
                     await model.predict(
                         imagePreview
@@ -359,27 +354,19 @@ if (analyzeButton) {
 
 
                 console.log(
-                    "=============================="
-                );
-
-                console.log(
-                    "MOSQUISCAN AI PREDICTIONS"
-                );
-
-                console.log(
-                    "=============================="
+                    "===== MOSQUISCAN AI ====="
                 );
 
 
-                // Print EVERY prediction
                 predictions.forEach(
                     function (prediction) {
 
                         console.log(
                             prediction.className +
-                            " = " +
+                            ": " +
                             (
-                                prediction.probability * 100
+                                prediction.probability *
+                                100
                             ).toFixed(2) +
                             "%"
                         );
@@ -388,10 +375,7 @@ if (analyzeButton) {
                 );
 
 
-                // ------------------------------------------------
-                // FIND HIGHEST PROBABILITY
-                // ------------------------------------------------
-
+                // Find highest probability
                 let highestPrediction =
                     predictions[0];
 
@@ -427,9 +411,10 @@ if (analyzeButton) {
 
 
                 console.log(
-                    "Highest Prediction:",
+                    "Final prediction:",
                     className
                 );
+
 
                 console.log(
                     "Confidence:",
@@ -437,11 +422,7 @@ if (analyzeButton) {
                 );
 
 
-                // ------------------------------------------------
-                // IMPORTANT:
                 // EXACT CLASS MATCHING
-                // ------------------------------------------------
-
                 if (
                     className ===
                     "Possible Breeding Site"
@@ -462,6 +443,7 @@ if (analyzeButton) {
                     }
 
                 }
+
 
                 else if (
                     className ===
@@ -484,9 +466,9 @@ if (analyzeButton) {
 
                 }
 
+
                 else {
 
-                    // Unknown class
                     currentAIResult =
                         className;
 
@@ -538,7 +520,7 @@ if (analyzeButton) {
 
 
 // ============================================================
-// 9. CURRENT LOCATION
+// CURRENT LOCATION
 // ============================================================
 
 if (locationButton) {
@@ -550,7 +532,7 @@ if (locationButton) {
             if (!navigator.geolocation) {
 
                 alert(
-                    "Geolocation is not supported by this browser."
+                    "Geolocation is not supported."
                 );
 
                 return;
@@ -576,13 +558,18 @@ if (locationButton) {
 
 
                     if (latitudeInput) {
+
                         latitudeInput.value =
                             lat.toFixed(6);
+
                     }
 
+
                     if (longitudeInput) {
+
                         longitudeInput.value =
                             lng.toFixed(6);
+
                     }
 
 
@@ -594,9 +581,7 @@ if (locationButton) {
                         );
 
 
-                        if (
-                            selectedLocationMarker
-                        ) {
+                        if (selectedLocationMarker) {
 
                             map.removeLayer(
                                 selectedLocationMarker
@@ -632,16 +617,10 @@ if (locationButton) {
                 },
 
 
-                function (error) {
-
-                    console.error(
-                        "Geolocation error:",
-                        error
-                    );
-
+                function () {
 
                     alert(
-                        "Unable to get your current location. You can enter the coordinates manually or click the map."
+                        "Unable to get your location. Enter the coordinates manually or click the map."
                     );
 
 
@@ -662,13 +641,20 @@ if (locationButton) {
 
 
 // ============================================================
-// 10. COMPRESS IMAGE BEFORE LOCAL STORAGE
+// COMPRESS AND RESIZE IMAGE
 // ============================================================
+//
+// Maximum saved image size: 800 px
+// JPEG quality: 0.60
+//
+// This greatly reduces the amount of data stored in
+// localStorage while keeping the image usable for records.
+//
 
 function compressImage(
     file,
-    maxWidth = 900,
-    quality = 0.7
+    maxWidth = 800,
+    quality = 0.60
 ) {
 
     return new Promise(
@@ -695,20 +681,24 @@ function compressImage(
                                 img.height;
 
 
+                            // Resize only if needed
                             if (
                                 width >
                                 maxWidth
                             ) {
 
-                                height =
-                                    height *
-                                    (
-                                        maxWidth /
-                                        width
-                                    );
+                                const ratio =
+                                    maxWidth /
+                                    width;
 
                                 width =
                                     maxWidth;
+
+                                height =
+                                    Math.round(
+                                        height *
+                                        ratio
+                                    );
 
                             }
 
@@ -732,6 +722,14 @@ function compressImage(
                                 );
 
 
+                            ctx.imageSmoothingEnabled =
+                                true;
+
+
+                            ctx.imageSmoothingQuality =
+                                "medium";
+
+
                             ctx.drawImage(
                                 img,
                                 0,
@@ -741,7 +739,8 @@ function compressImage(
                             );
 
 
-                            const compressed =
+                            // Convert to compressed JPEG
+                            const compressedImage =
                                 canvas.toDataURL(
                                     "image/jpeg",
                                     quality
@@ -749,7 +748,7 @@ function compressImage(
 
 
                             resolve(
-                                compressed
+                                compressedImage
                             );
 
                         };
@@ -778,7 +777,7 @@ function compressImage(
 
 
 // ============================================================
-// 11. SAVE INSPECTION
+// SAVE INSPECTION
 // ============================================================
 
 if (saveButton) {
@@ -787,7 +786,6 @@ if (saveButton) {
         "click",
         async function () {
 
-            // Check image
             if (!currentImage) {
 
                 alert(
@@ -798,7 +796,6 @@ if (saveButton) {
             }
 
 
-            // Check AI result
             if (!currentAIResult) {
 
                 alert(
@@ -809,7 +806,6 @@ if (saveButton) {
             }
 
 
-            // Check latitude
             if (
                 !latitudeInput ||
                 !latitudeInput.value.trim()
@@ -823,7 +819,6 @@ if (saveButton) {
             }
 
 
-            // Check longitude
             if (
                 !longitudeInput ||
                 !longitudeInput.value.trim()
@@ -843,14 +838,36 @@ if (saveButton) {
                     true;
 
                 saveButton.textContent =
-                    "Saving...";
+                    "Compressing & Saving...";
 
 
-                // Compress image
-                const imageData =
+                // Compress BEFORE storing
+                const compressedImage =
                     await compressImage(
-                        currentImage
+                        currentImage,
+                        800,
+                        0.60
                     );
+
+
+                // Calculate approximate size
+                const approximateSize =
+                    Math.round(
+                        (
+                            compressedImage.length *
+                            3
+                        ) / 4
+                    );
+
+
+                console.log(
+                    "Compressed image size:",
+                    (
+                        approximateSize /
+                        1024
+                    ).toFixed(1),
+                    "KB"
+                );
 
 
                 const record = {
@@ -859,7 +876,7 @@ if (saveButton) {
                         Date.now(),
 
                     image:
-                        imageData,
+                        compressedImage,
 
                     result:
                         currentAIResult,
@@ -886,56 +903,19 @@ if (saveButton) {
                 };
 
 
-                // Get old records
-                let records = [];
+                let records =
+                    getSavedRecords();
 
 
-                try {
-
-                    const stored =
-                        localStorage.getItem(
-                            "mosquiscanRecords"
-                        );
-
-
-                    if (stored) {
-
-                        records =
-                            JSON.parse(
-                                stored
-                            );
-
-                    }
-
-
-                    if (!Array.isArray(records)) {
-                        records = [];
-                    }
-
-                } catch (error) {
-
-                    console.error(
-                        "Error reading records:",
-                        error
-                    );
-
-                    records = [];
-
-                }
-
-
-                // Add new record
                 records.push(record);
 
 
-                // Save
                 localStorage.setItem(
                     "mosquiscanRecords",
                     JSON.stringify(records)
                 );
 
 
-                // Success message
                 if (saveMessage) {
 
                     saveMessage.textContent =
@@ -952,7 +932,7 @@ if (saveButton) {
                 );
 
 
-                // Reset form
+                // Reset
                 currentImage = null;
                 currentAIResult = "";
 
@@ -988,7 +968,6 @@ if (saveButton) {
                 }
 
 
-                // Refresh
                 updateDashboard();
                 displayRecords();
                 displayMapMarkers();
@@ -1008,13 +987,13 @@ if (saveButton) {
                 ) {
 
                     alert(
-                        "The browser storage is full. Try deleting some old records."
+                        "Storage is full. Delete some old records and try again."
                     );
 
                 } else {
 
                     alert(
-                        "The inspection could not be saved. Check the browser console for details."
+                        "The inspection could not be saved."
                     );
 
                 }
@@ -1026,7 +1005,7 @@ if (saveButton) {
                 false;
 
             saveButton.textContent =
-                "Save Inspection";
+                "💾 Save Inspection";
 
         }
     );
@@ -1035,7 +1014,7 @@ if (saveButton) {
 
 
 // ============================================================
-// 12. GET SAVED RECORDS
+// GET RECORDS
 // ============================================================
 
 function getSavedRecords() {
@@ -1067,7 +1046,7 @@ function getSavedRecords() {
     } catch (error) {
 
         console.error(
-            "Could not load records:",
+            "Could not read records:",
             error
         );
 
@@ -1079,17 +1058,13 @@ function getSavedRecords() {
 
 
 // ============================================================
-// 13. UPDATE DASHBOARD
+// DASHBOARD
 // ============================================================
 
 function updateDashboard() {
 
     const records =
         getSavedRecords();
-
-
-    const total =
-        records.length;
 
 
     const possible =
@@ -1119,27 +1094,33 @@ function updateDashboard() {
 
 
     if (totalRecords) {
+
         totalRecords.textContent =
-            total;
+            records.length;
+
     }
 
 
     if (possibleSites) {
+
         possibleSites.textContent =
             possible;
+
     }
 
 
     if (notPossibleSites) {
+
         notPossibleSites.textContent =
             notPossible;
+
     }
 
 }
 
 
 // ============================================================
-// 14. DISPLAY RECORDS
+// DISPLAY RECORDS
 // ============================================================
 
 function displayRecords() {
@@ -1159,15 +1140,16 @@ function displayRecords() {
     if (records.length === 0) {
 
         recordsList.innerHTML =
-            `<p class="no-records">
+            `
+            <p class="no-records">
                 No inspection records yet.
-            </p>`;
+            </p>
+            `;
 
         return;
     }
 
 
-    // Newest first
     const reversedRecords =
         [...records].reverse();
 
@@ -1185,9 +1167,13 @@ function displayRecords() {
                 "record-item";
 
 
-            const resultClass =
+            const isPossible =
                 record.result ===
-                "Possible Breeding Site"
+                "Possible Breeding Site";
+
+
+            const resultClass =
+                isPossible
                     ? "result-possible"
                     : "result-not-possible";
 
@@ -1195,11 +1181,14 @@ function displayRecords() {
             item.innerHTML = `
 
                 <div class="record-image">
+
                     <img
                         src="${record.image}"
-                        alt="Inspection Image"
+                        alt="MosquiScan inspection image"
                     >
+
                 </div>
+
 
                 <div class="record-info">
 
@@ -1243,7 +1232,7 @@ function displayRecords() {
 
 
 // ============================================================
-// 15. DISPLAY MAP MARKERS
+// MAP MARKERS
 // ============================================================
 
 function displayMapMarkers() {
@@ -1257,7 +1246,6 @@ function displayMapMarkers() {
         getSavedRecords();
 
 
-    // Remove previous MosquiScan markers
     map.eachLayer(
         function (layer) {
 
@@ -1305,8 +1293,6 @@ function displayMapMarkers() {
                 "Possible Breeding Site";
 
 
-            // Red = Possible
-            // Green = Not Possible
             const markerColor =
                 isPossible
                     ? "red"
@@ -1325,7 +1311,8 @@ function displayMapMarkers() {
                         fillColor:
                             markerColor,
 
-                        fillOpacity: 0.8
+                        fillOpacity:
+                            0.8
                     }
                 ).addTo(map);
 
@@ -1336,11 +1323,12 @@ function displayMapMarkers() {
                         <img
                             src="${record.image}"
                             style="
-                                width:180px;
-                                max-height:130px;
+                                width:160px;
+                                height:100px;
                                 object-fit:cover;
                                 border-radius:8px;
-                                margin-bottom:8px;
+                                display:block;
+                                margin:0 auto 8px;
                             "
                         >
                     `
@@ -1383,7 +1371,7 @@ function displayMapMarkers() {
 
 
 // ============================================================
-// 16. OPTIONAL CLEAR ALL RECORDS
+// CLEAR RECORDS
 // ============================================================
 
 const clearRecordsButton =
@@ -1430,7 +1418,7 @@ if (clearRecordsButton) {
 
 
 // ============================================================
-// 17. INITIALIZE
+// START MOSQUISCAN
 // ============================================================
 
 async function initializeMosquiScan() {
@@ -1440,13 +1428,13 @@ async function initializeMosquiScan() {
     );
 
 
-    // Load existing records
     updateDashboard();
+
     displayRecords();
+
     displayMapMarkers();
 
 
-    // Load AI model
     await loadAIModel();
 
 
@@ -1457,5 +1445,4 @@ async function initializeMosquiScan() {
 }
 
 
-// Start system
 initializeMosquiScan();
