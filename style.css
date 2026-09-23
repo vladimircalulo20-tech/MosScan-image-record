@@ -645,3 +645,52 @@ input[type="file"] {
     }
 
 }
+/* =========================================================
+   SMALLER INSPECTION RECORD IMAGES
+========================================================= */
+
+.record-image {
+    width: 140px;
+    height: 100px;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 10px;
+    background: #e8f5ee;
+}
+
+.record-image img {
+    width: 140px;
+    height: 100px;
+    object-fit: cover;
+    display: block;
+}
+
+
+/* Keep record layout neat */
+
+.record-item {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .record-image {
+        width: 110px;
+        height: 80px;
+    }
+
+    .record-image img {
+        width: 110px;
+        height: 80px;
+    }
+
+    .record-item {
+        gap: 10px;
+    }
+
+}
